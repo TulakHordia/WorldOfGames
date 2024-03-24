@@ -1,0 +1,5 @@
+# Set Python files to be treated as Python
+*.py linguist-language=Python
+
+# Treat Markdown files as Markdown
+*.md linguist-language=Markdown
