@@ -17,6 +17,7 @@ def start_play():
         3: "Currency Roulette - try and guess the value of a random amount of USD in ILS."
     }
     games_list = [memory_game, guess_game, currency_roulette_game]
+
     styles.menu_items("Please choose a game to play:")
     for key, value in games.items():
         print(f"{key}. {value}")
@@ -38,7 +39,3 @@ def start_play():
                     styles.error_message("Invalid input, Difficulty must be between 1 and 5")
         else:
             styles.error_message("Invalid input, Please select a number between 1 and 3")
-
-
-welcome()
-start_play()
