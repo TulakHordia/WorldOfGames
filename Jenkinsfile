@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Hello') {
             steps {
-                git "https://github.com/TulakHordia/WorldOfGames.git"
+                sh 'python main.py'
             }
         }
     }
