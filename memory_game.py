@@ -1,22 +1,26 @@
+import os
 import random
+import time
 import styles
 
 
 def generate_sequence(difficulty):
     random_list = random.sample(range(1, 101), difficulty)
     styles.menu_items(f"The random list is: {random_list}")
+    time.sleep(0.7)
+    os.system('clear')
     return random_list
 
 
 def get_list_from_user(difficulty):
     user_list = []
     while difficulty > 0:
-        number = int(input('Enter a number between 1 and 101 to create your own list: '))
+        number = int(input(f"Enter your guess ({difficulty}): "))
         if 1 <= number <= 101:
             user_list.append(number)
             difficulty -= 1
         else:
-            styles.error_message('Please enter a number between 1 and 101. ')
+            styles.error_message('Please enter the guesses (1-101): ')
     return user_list
 
 
