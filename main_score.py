@@ -1,5 +1,4 @@
 from flask import Flask, render_template
-
 import utils
 
 app = Flask(__name__)
@@ -7,10 +6,14 @@ app = Flask(__name__)
 
 @app.route('/')
 def score_server():
-    SCORE = utils.SCORES_FILE_NAME
-    ERROR = utils.BAD_RETURN_CODE
-    render_template('error.html', ERROR=ERROR)
-    render_template('score.html', SCORE=SCORE)
+    try:
+        with open(utils.SCORES_FILE_NAME, 'r') as file:
+            score = file.read()
+    except FileNotFoundError:
+        error = utils.BAD_RETURN_CODE
+        return render_template('error.html', ERROR=error)
+
+    return render_template('score.html', SCORE=score)
 
 
 if __name__ == '__main__':
