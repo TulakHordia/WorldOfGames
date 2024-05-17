@@ -39,6 +39,8 @@ def play(difficulty):
     if compare_results(interval, guess, secret_number_in_ils):
         print('Congrats! You guessed the correct value!')
         styles.choice_result(f"Correct value is: {secret_number_in_ils}")
+        return True
     else:
         print('Sorry, you guessed the wrong value!')
         styles.error_message(f"The correct value was: {secret_number_in_ils}")
+        return False

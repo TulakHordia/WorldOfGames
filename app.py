@@ -2,6 +2,7 @@ import guess_game
 import memory_game
 import currency_roulette_game
 import styles
+import score
 
 
 def welcome():
@@ -33,7 +34,9 @@ def start_play():
                     styles.choice_result(f"Your difficulty is {difficulty_choice}")
                     styles.choice_result(f"Your game is: {games[choice]}")
                     styles.choice_result("Initiating...")
-                    games_list[choice-1].play(difficulty_choice)
+                    if games_list[choice-1].play(difficulty_choice):
+                        print(f"Congratulations! You won!")
+                        score.add_score(difficulty_choice)
                     return
                 else:
                     styles.error_message("Invalid input, Difficulty must be between 1 and 5")

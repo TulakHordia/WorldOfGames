@@ -24,5 +24,7 @@ def play(difficulty):
     guessed_number = get_guess_from_user(difficulty)
     if compare_results(secret_number, guessed_number):
         styles.choice_result("Congrats! You guessed the correct number!")
+        return True
     else:
         styles.error_message("Sorry, you guessed the wrong number!")
+        return False

@@ -2,13 +2,14 @@ import os
 import random
 import time
 import styles
+import utils
 
 
 def generate_sequence(difficulty):
     random_list = random.sample(range(1, 101), difficulty)
     styles.menu_items(f"The random list is: {random_list}")
     time.sleep(0.7)
-    os.system('clear')
+    utils.screen_cleaner()
     return random_list
 
 
@@ -36,5 +37,7 @@ def play(difficulty):
     user_list = get_list_from_user(difficulty)
     if is_list_equal(random_list, user_list):
         styles.choice_result('Congratulations! you remembered them all! ')
+        return True
     else:
         styles.error_message('Sorry you have not remembered them all! ')
+        return False
