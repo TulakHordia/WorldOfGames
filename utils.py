@@ -1,7 +1,7 @@
 import os
 
-SCORES_FILE_NAME = "scores.txt"
-BAD_RETURN_CODE = 404
+SCORES_FILE_NAME = 'scores.txt'
+BAD_RETURN_CODE = "ERROR"
 
 
 def screen_cleaner():
