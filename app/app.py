@@ -4,6 +4,9 @@ import currency_roulette_game
 import styles
 import score
 
+error_message_1_to_5 = "Invalid input, Difficulty must be between 1 and 5"
+error_message_1_to_3 = "Invalid input, Difficulty must be between 1 and 3"
+invalid_input = "Invalid input. Please enter a number."
 
 def welcome():
     styles.styled_print("Enter your name below: ")
@@ -25,20 +28,28 @@ def start_play():
 
     while True:
         styles.menu_items("Select your game (1-3): ")
-        choice = int(input())
-        if choice in games:
-            while True:
-                styles.menu_items("Choose a difficulty (1-5): ")
-                difficulty_choice = int(input())
-                if 1 <= difficulty_choice <= 5:
-                    styles.choice_result(f"Your difficulty is {difficulty_choice}")
-                    styles.choice_result(f"Your game is: {games[choice]}")
-                    styles.choice_result("Initiating...")
-                    if games_list[choice-1].play(difficulty_choice):
-                        print(f"Congratulations! You won!")
-                        score.add_score(difficulty_choice)
-                    return
-                else:
-                    styles.error_message("Invalid input, Difficulty must be between 1 and 5")
-        else:
-            styles.error_message("Invalid input, Please select a number between 1 and 3")
+        choice = input()
+        try:
+            choice = int(choice)
+            if choice in games:
+                while True:
+                    styles.menu_items("Choose a difficulty (1-5): ")
+                    difficulty_choice = input()
+                    try:
+                        difficulty_choice = int(difficulty_choice)
+                        if 1 <= difficulty_choice <= 5:
+                            styles.choice_result(f"Your difficulty is {difficulty_choice}")
+                            styles.choice_result(f"Your game is: {games[choice]}")
+                            styles.choice_result("Initiating...")
+                            if games_list[choice-1].play(difficulty_choice):
+                                print(f"Congratulations! You won!")
+                                score.add_score(difficulty_choice)
+                            return
+                        else:
+                            styles.error_message(error_message_1_to_5)
+                    except ValueError:
+                        print(invalid_input)
+            else:
+                styles.error_message(error_message_1_to_3)
+        except ValueError:
+            print(invalid_input)
