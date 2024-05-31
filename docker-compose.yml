@@ -1,0 +1,17 @@
+services:
+  game:
+    build:
+      context: .
+      dockerfile: app/game.Dockerfile
+    volumes:
+      - ./scores:/app/scores
+
+  flask:
+    build:
+      context: .
+      dockerfile: flask_app/flask.Dockerfile
+    ports:
+      - "5050:5000"
+    volumes:
+      - ./scores:/app/scores
+

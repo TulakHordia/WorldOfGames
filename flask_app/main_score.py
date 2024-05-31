@@ -24,3 +24,7 @@ def score_server():
         error = utils.BAD_RETURN_CODE
         return render_template('error.html', ERROR=error)
 
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
+
