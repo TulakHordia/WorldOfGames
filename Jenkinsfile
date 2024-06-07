@@ -2,8 +2,6 @@ pipeline {
     agent any
 
     environment {
-        // DOCKER_IMAGE = "tulakhordia/worldofgames" // Replace with your DockerHub repository
-        // DOCKER_TAG = "latest"
         DOCKERHUB_CREDENTIALS = 'docker_tulak_id' // Jenkins credential ID for DockerHub
     }
 
@@ -17,7 +15,10 @@ pipeline {
         stage('Build and Push') {
             steps {
                 script {
-                    // Build and push app and flask images
+                    // Ensure Docker is running
+                    sh 'docker --version'
+
+                    // Build and push Docker images
                     docker.withRegistry('https://index.docker.io/v1/', env.DOCKERHUB_CREDENTIALS) {
                         sh 'docker-compose build'
                         sh 'docker-compose push'
@@ -29,7 +30,7 @@ pipeline {
         stage('Run with Docker Compose') {
             steps {
                 script {
-                    // Run docker-compose up to start both app and flask
+                    // Start services with Docker Compose
                     sh 'docker-compose up -d'
                 }
             }
@@ -38,7 +39,7 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    // Install Python dependencies and run e2e.py tests
+                    // Install Python dependencies and run tests
                     sh '''
                         pip install -r requirements.txt
                         python3 e2e.py
@@ -50,7 +51,7 @@ pipeline {
         stage('Teardown') {
             steps {
                 script {
-                    // Stop and remove all containers started by docker-compose
+                    // Stop and remove all containers
                     sh 'docker-compose down'
                 }
             }
