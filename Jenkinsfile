@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "tulakhordia/worldofgames" // Replace with your DockerHub repository
-        DOCKER_TAG = "latest"
+        // DOCKER_IMAGE = "tulakhordia/worldofgames" // Replace with your DockerHub repository
+        // DOCKER_TAG = "latest"
         DOCKERHUB_CREDENTIALS = 'docker_tulak_id' // Jenkins credential ID for DockerHub
     }
 
@@ -14,20 +14,23 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage('Build and Push') {
             steps {
                 script {
-                    docker.build("${env.DOCKER_IMAGE}:${env.DOCKER_TAG}")
+                    // Build and push app and flask images
+                    docker.withRegistry('https://index.docker.io/v1/', env.DOCKERHUB_CREDENTIALS) {
+                        sh 'docker-compose build'
+                        sh 'docker-compose push'
+                    }
                 }
             }
         }
 
-        stage('Run') {
+        stage('Run with Docker Compose') {
             steps {
                 script {
-                    // Run Docker container exposing port 8777 and mounting dummy Scores.txt
-                    sh 'echo "Dummy scores data" > Scores.txt'
-                    sh 'docker run -d --name worldofgames-container -p 8777:8777 -v $PWD/Scores.txt:/app/Scores.txt ${env.DOCKER_IMAGE}:${env.DOCKER_TAG}'
+                    // Run docker-compose up to start both app and flask
+                    sh 'docker-compose up -d'
                 }
             }
         }
@@ -35,28 +38,21 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    // Ensure Python and necessary dependencies are installed
+                    // Install Python dependencies and run e2e.py tests
                     sh '''
-                        python3 --version
                         pip install -r requirements.txt
+                        python3 e2e.py
                     '''
-                    // Run the e2e.py script to perform Selenium tests
-                    sh 'python3 e2e.py'
                 }
             }
         }
 
-        stage('Finalize') {
+        stage('Teardown') {
             steps {
                 script {
-                    // Stop and remove the Docker container
-                    sh 'docker stop worldofgames-container'
-                    sh 'docker rm worldofgames-container'
-
-                    // Push Docker image to DockerHub
-                    docker.withRegistry('https://index.docker.io/v1/', env.DOCKERHUB_CREDENTIALS) {
-                        docker.image("${env.DOCKER_IMAGE}:${env.DOCKER_TAG}").push()
-                    }
+                    // Stop and remove all containers started by docker-compose
+                    sh 'docker-compose down'
+                }
             }
         }
     }
