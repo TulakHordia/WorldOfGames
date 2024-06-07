@@ -11,3 +11,6 @@ Welcome to the World of Games: The Epic Journey! This Python program offers you 
 - **Currency Roulette:** Take a gamble and try to guess the value of a random amount of USD in ILS (Israeli Shekels).
 
 - Currently has Flask integration working, run 'main_score.py' and go to: http://127.0.0.1:5050
+
+# Usage:
+- Run 

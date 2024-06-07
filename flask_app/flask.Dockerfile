@@ -1,4 +1,4 @@
-FROM python:3.9-slim
+FROM python:3.9
 
 WORKDIR /flask_app
 
@@ -10,6 +10,7 @@ COPY flask_app/ .
 RUN pip install -r requirements.txt
 
 EXPOSE 5000
+EXPOSE 8777
 
 CMD python main_score.py
 

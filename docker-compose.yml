@@ -3,15 +3,27 @@ services:
     build:
       context: .
       dockerfile: app/game.Dockerfile
+      args:
+        - IMAGE_TAG=game-latest
     volumes:
       - ./scores:/app/scores
+    image: tulakhordia/game:game-latest
 
   flask:
     build:
       context: .
       dockerfile: flask_app/flask.Dockerfile
+      args:
+        - IMAGE_TAG=flask-latest
     ports:
       - "5050:5000"
+      - "8777:5000"
     volumes:
       - ./scores:/app/scores
+    image: tulakhordia/flask:flask-latest
+    depends_on:
+      - game
 
+networks:
+  default:
+    driver: bridge
