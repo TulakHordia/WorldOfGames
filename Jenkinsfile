@@ -42,7 +42,7 @@ pipeline {
                     sh '''
                         pip install selenium
                         pip install webdriver_manager
-                        python3 /tests/e2e.py
+                        python3 tests/e2e.py
                     '''
                 }
             }
