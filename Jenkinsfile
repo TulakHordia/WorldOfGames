@@ -8,46 +8,6 @@ pipeline {
     }
 
     stages {
-        stage('Install Dependencies') {
-            steps {
-                script {
-                    // Detect package manager and install dependencies accordingly
-                    sh '''
-                        if command -v apt-get > /dev/null; then
-                            echo "Using apt-get for installation"
-                            apt-get update
-                            apt-get install -y docker.io
-                            usermod -aG docker jenkins
-                            apt-get install -y python3 python3-pip
-                        elif command -v yum > /dev/null; then
-                            echo "Using yum for installation"
-                            yum update -y
-                            yum install -y docker
-                            usermod -aG docker jenkins
-                            yum install -y python3
-                            yum install -y python3-pip
-                        elif command -v dnf > /dev/null; then
-                            echo "Using dnf for installation"
-                            dnf update -y
-                            dnf install -y docker
-                            usermod -aG docker jenkins
-                            dnf install -y python3 python3-pip
-                        else
-                            echo "No supported package manager found!"
-                            exit 1
-                        fi
-
-                        # Install Docker Compose
-                        curl -L "https://github.com/docker/compose/releases/download/v2.22.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-                        chmod +x /usr/local/bin/docker-compose
-
-                        # Start Docker service
-                        sudo systemctl start docker
-                        sudo systemctl enable docker
-                    '''
-                }
-            }
-        }
         stage('Checkout') {
             steps {
                 git url: 'https://github.com/TulakHordia/WorldOfGames.git'
