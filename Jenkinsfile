@@ -40,7 +40,8 @@ pipeline {
                 script {
                     // Install Python dependencies and run e2e.py tests
                     sh '''
-                        pip install -r /tests/requirements.txt
+                        pip install selenium
+                        pip install webdriver_manager
                         python3 e2e.py
                     '''
                 }
