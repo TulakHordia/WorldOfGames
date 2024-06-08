@@ -15,8 +15,10 @@ pipeline {
         }
 
         stage('Build') {
-            script {
-            dockerImage = docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
+            steps {
+                script {
+                    dockerImage = docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
+                }
             }
         }
 
