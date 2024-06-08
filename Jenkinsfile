@@ -40,7 +40,7 @@ pipeline {
                 script {
                     // Install Python dependencies and run e2e.py tests
                     sh '''
-                        pip install -r requirements.txt
+                        pip install -r /tests/requirements.txt
                         python3 e2e.py
                     '''
                 }
