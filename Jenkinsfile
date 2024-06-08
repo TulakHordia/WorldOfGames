@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        // DOCKER_IMAGE = "tulakhordia/worldofgames" // Replace with your DockerHub repository
-        // DOCKER_TAG = "latest"
+        DOCKER_IMAGE = "tulakhordia/worldofgames" // Replace with your DockerHub repository
+        DOCKER_TAG = "latest"
         DOCKERHUB_CREDENTIALS = 'docker_tulak_id' // Jenkins credential ID for DockerHub
     }
 
@@ -14,13 +14,20 @@ pipeline {
             }
         }
 
-        stage('Build and Push') {
+        stage('Build') {
+            script {
+            dockerImage = docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
+            }
+        }
+
+        stage('Push') {
             steps {
                 script {
                     // Build and push app and flask images
-                    docker.withRegistry('https://index.docker.io/v1/', env.DOCKERHUB_CREDENTIALS) {
-                        sh 'docker-compose build'
-                        sh 'docker-compose push'
+                    docker.withRegistry('', DOCKERHUB_CREDENTIALS) {
+                        dockerImage.push()
+                        //sh 'docker-compose build'
+                        //sh 'docker-compose push'
                     }
                 }
             }
