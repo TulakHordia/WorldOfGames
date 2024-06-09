@@ -1,5 +1,5 @@
 pipeline {
-    agent node01
+     agent { label 'node01' }
 
     environment {
         //DOCKER_IMAGE = "tulakhordia/worldofgames" // Replace with your DockerHub repository
