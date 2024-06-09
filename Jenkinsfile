@@ -14,14 +14,17 @@ pipeline {
                 git url: 'https://github.com/TulakHordia/WorldOfGames.git'
             }
         }
-
+        stage('Install Docker-compose maybe') {
+        steps {
+        script {
+        sh 'pip install docker-compose'}}}
         stage('Build and Push') {
             steps {
                 script {
                     // Build and push app and flask images
                     docker.withRegistry('', DOCKERHUB_CREDENTIALS) {
-                        sh 'docker compose build'
-                        sh 'docker compose push'
+                        sh 'docker-compose build'
+                        sh 'docker-compose push'
                     }
                 }
             }
@@ -31,7 +34,7 @@ pipeline {
             steps {
                 script {
                     // Run docker-compose up to start both app and flask
-                    sh 'docker compose up -d'
+                    sh 'docker-compose up -d'
                 }
             }
         }
@@ -53,7 +56,7 @@ pipeline {
             steps {
                 script {
                     // Stop and remove all containers started by docker-compose
-                    sh 'docker compose down'
+                    sh 'docker-compose down'
                 }
             }
         }
