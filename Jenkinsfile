@@ -1,11 +1,11 @@
 pipeline {
-    agent any
+    agent node01
 
     environment {
         //DOCKER_IMAGE = "tulakhordia/worldofgames" // Replace with your DockerHub repository
         //DOCKER_TAG = "latest"
         DOCKERHUB_CREDENTIALS = 'docker_tulak_id' // Jenkins credential ID for DockerHub
-        DOCKER_COMPOSE = "$PATH:/usr/local/bin/docker-compose"
+        DOCKER_COMPOSE = "/usr/local/bin/docker-compose"
     }
 
     stages {
