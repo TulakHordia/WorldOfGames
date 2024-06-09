@@ -20,8 +20,8 @@ pipeline {
                 script {
                     // Build and push app and flask images
                     docker.withRegistry('', DOCKERHUB_CREDENTIALS) {
-                        sh '${DOCKER_COMPOSE} build'
-                        sh '${DOCKER_COMPOSE} push'
+                        sh 'docker compose build'
+                        sh 'docker compose push'
                     }
                 }
             }
@@ -31,7 +31,7 @@ pipeline {
             steps {
                 script {
                     // Run docker-compose up to start both app and flask
-                    sh '${DOCKER_COMPOSE} up -d'
+                    sh 'docker compose up -d'
                 }
             }
         }
@@ -53,7 +53,7 @@ pipeline {
             steps {
                 script {
                     // Stop and remove all containers started by docker-compose
-                    sh '${DOCKER_COMPOSE} down'
+                    sh 'docker compose down'
                 }
             }
         }
