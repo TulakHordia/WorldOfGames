@@ -5,7 +5,7 @@ pipeline {
         //DOCKER_IMAGE = "tulakhordia/worldofgames" // Replace with your DockerHub repository
         //DOCKER_TAG = "latest"
         DOCKERHUB_CREDENTIALS = 'docker_tulak_id' // Jenkins credential ID for DockerHub
-        DOCKER_COMPOSE = "docker compose"
+        DOCKER_COMPOSE = "/opt/homebrew/bin/docker-compose"
     }
 
     stages {
@@ -18,15 +18,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        pip install --upgrade pip
-                        pip install docker
-                        pip install cython
-                        pip install wheel setuptools cython
-                        DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
-                        mkdir -p $DOCKER_CONFIG/cli-plugins
-                        curl -SL https://github.com/docker/compose/releases/download/v2.27.1/docker-compose-linux-x86_64 -o $DOCKER_CONFIG/cli-plugins/docker-compose
-                        chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
-                        docker compose version
+                        docker-compose version
                     '''
                 }
             }
