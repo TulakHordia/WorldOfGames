@@ -5,6 +5,7 @@ pipeline {
         //DOCKER_IMAGE = "tulakhordia/worldofgames" // Replace with your DockerHub repository
         //DOCKER_TAG = "latest"
         DOCKERHUB_CREDENTIALS = 'docker_tulak_id' // Jenkins credential ID for DockerHub
+        PATH = "$PATH:/usr/local/bin"
     }
 
     stages {
