@@ -3,6 +3,8 @@ venv/
 
 # Ignore PyCharm project files
 .idea/
+tests/requirements.txt
+tests/tests.Dockerfile
 
 # Ignore Python cache files
 __pycache__/
