@@ -17,12 +17,17 @@ pipeline {
         stage('Install Docker-compose maybe') {
             steps {
                 script {
-                    sh 'docker compose version'
-                    sh 'pip install --upgrade pip'
-                    sh 'pip install cython'
-                    sh 'pip install wheel setuptools cython'
-                    sh 'pip install docker'
-                    sh 'docker plugin install compose'
+                    sh '''
+                        pip install --upgrade pip
+                        pip install docker
+                        pip install cython
+                        pip install wheel setuptools cyton
+                        DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
+                        mkdir -p $DOCKER_CONFIG/cli-plugins
+                        curl -SL https://github.com/docker/compose/releases/download/v2.27.1/docker-compose-linux-x86_64 -o $DOCKER_CONFIG/cli-plugins/docker-compose
+                        chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
+                        docker compose version
+                    '''
                 }
             }
         }
