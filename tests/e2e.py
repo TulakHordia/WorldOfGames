@@ -12,7 +12,7 @@ def test_scores_service(app_url):
         options.add_argument('--disable-dev-shm-usage')
 
         # Use installed GeckoDriver path
-        service = FirefoxService(executable_path='/opt/geckodriver')
+        service = FirefoxService(executable_path='/opt/homebrew/bin/geckodriver')
 
         driver = webdriver.Firefox(service=service, options=options)
         print(f"Opening URL: {app_url}")
