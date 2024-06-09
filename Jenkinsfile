@@ -18,9 +18,9 @@ pipeline {
             steps {
                 script {
                     sh 'pip install --upgrade pip'
-                    sh 'pip install cython -y'
-                    sh 'pip install docker-compose -y'
-                    sh 'pip install wheel setuptools cython -y'
+                    sh 'pip install cython'
+                    sh 'pip install docker-compose'
+                    sh 'pip install wheel setuptools cython'
                 }
             }
         }
