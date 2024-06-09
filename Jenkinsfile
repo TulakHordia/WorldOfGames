@@ -5,7 +5,7 @@ pipeline {
         //DOCKER_IMAGE = "tulakhordia/worldofgames" // Replace with your DockerHub repository
         //DOCKER_TAG = "latest"
         DOCKERHUB_CREDENTIALS = 'docker_tulak_id' // Jenkins credential ID for DockerHub
-        PATH = "$PATH:/usr/local/bin"
+        DOCKER_COMPOSE = "$PATH:/usr/local/bin/docker-compose"
     }
 
     stages {
@@ -20,8 +20,8 @@ pipeline {
                 script {
                     // Build and push app and flask images
                     docker.withRegistry('', DOCKERHUB_CREDENTIALS) {
-                        sh 'docker-compose build'
-                        sh 'docker-compose push'
+                        sh 'docker compose build'
+                        sh 'docker compose push'
                     }
                 }
             }
@@ -31,7 +31,7 @@ pipeline {
             steps {
                 script {
                     // Run docker-compose up to start both app and flask
-                    sh 'docker-compose up -d'
+                    sh 'docker compose up -d'
                 }
             }
         }
@@ -53,7 +53,7 @@ pipeline {
             steps {
                 script {
                     // Stop and remove all containers started by docker-compose
-                    sh 'docker-compose down'
+                    sh 'docker compose down'
                 }
             }
         }
