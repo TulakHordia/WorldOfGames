@@ -14,15 +14,6 @@ pipeline {
                 git url: 'https://github.com/TulakHordia/WorldOfGames.git'
             }
         }
-        stage('Install Docker-compose maybe') {
-            steps {
-                script {
-                    sh '''
-                        docker-compose version
-                    '''
-                }
-            }
-        }
 
         stage('Build and Push') {
             steps {

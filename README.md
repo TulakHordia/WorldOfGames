@@ -10,7 +10,19 @@ Welcome to the World of Games: The Epic Journey! This Python program offers you 
   
 - **Currency Roulette:** Take a gamble and try to guess the value of a random amount of USD in ILS (Israeli Shekels).
 
-- Currently has Flask integration working, run 'main_score.py' and go to: http://127.0.0.1:5050
+## Flask Integration
 
-# Usage:
-- Run 
+The project currently has Flask integration working. To run the application, execute `main_score.py` and visit [http://127.0.0.1:5050](http://127.0.0.1:5050) in your browser.
+
+## Jenkins Pipeline
+
+The project is integrated with Jenkins using a Jenkinsfile. The pipeline script automates the following tasks:
+
+- Pulls the GitHub repository.
+- Builds the Docker image and pushes it.
+- Launches the Docker containers.
+- Installs Selenium and Webdriver Manager.
+- Executes tests using `tests/e2e.py` to ensure the score is between 1 and 1000.
+- Fails the pipeline if the test conditions are not met.
+
+The tests are performed on port 8777.
