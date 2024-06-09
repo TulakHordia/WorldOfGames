@@ -13,8 +13,3 @@ EXPOSE 5000
 EXPOSE 8777
 
 CMD python main_score.py
-
-
-
-
-
