@@ -15,9 +15,16 @@ pipeline {
             }
         }
         stage('Install Docker-compose maybe') {
-        steps {
-        script {
-        sh 'pip install docker-compose'}}}
+            steps {
+                script {
+                    sh 'pip install --upgrade pip'
+                    sh 'pip install cython -y'
+                    sh 'pip install docker-compose -y'
+                    sh 'pip install wheel setuptools cython -y'
+                }
+            }
+        }
+
         stage('Build and Push') {
             steps {
                 script {
